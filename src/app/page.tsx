@@ -1,11 +1,12 @@
-import Navbar from './components/Navbar'
+"use client";
+import { NavbarSimple } from "./components/NavbarSimple";
+import { ThemeProvider } from "@/lib/material";
+
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-5">
+    <main>
       {/* <h1 className="text-4xl font-bold text-center"> Next.js + Tailwind CSS + TypeScript </h1> */}
-      <Navbar />
     </main>
-  )
-
+  );
 }
