@@ -1,8 +1,10 @@
 "use client";
 import { Card, Input, Checkbox, Button, Typography } from "@/lib/material";
 import { getRegisterUrl, getLoginUrl } from "@/lib/urls";
+import Link from "next/link";
 
 import axios from "axios";
+import { FormEventHandler } from "react";
 
 export function SimpleRegisterForm() {
   const handleSubmit = async (e: FormEventHandler<HTMLFormElement>) => {
@@ -42,12 +44,12 @@ export function SimpleRegisterForm() {
               className="flex items-center font-normal"
             >
               I agree the
-              <a
+              <Link
                 href="#"
                 className="font-medium transition-colors hover:text-blue-500"
               >
                 &nbsp;Terms and Conditions
-              </a>
+              </Link>
             </Typography>
           }
           containerProps={{ className: "-ml-2.5" }}
@@ -57,12 +59,12 @@ export function SimpleRegisterForm() {
         </Button>
         <Typography color="gray" className="mt-4 text-center font-normal">
           Already have an account?{" "}
-          <a
+          <Link
             href="#"
             className="font-medium text-blue-500 transition-colors hover:text-blue-700"
           >
             Sign In
-          </a>
+          </Link>
         </Typography>
       </form>
     </Card>
