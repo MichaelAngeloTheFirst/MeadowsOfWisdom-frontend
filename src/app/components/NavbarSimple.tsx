@@ -19,7 +19,7 @@ function NavList() {
         className="p-1 font-medium"
       >
         <a
-          href="#"
+          href="/login"
           className="flex items-center hover:text-blue-500 transition-colors"
         >
           Login
@@ -32,10 +32,10 @@ function NavList() {
         className="p-1 font-medium"
       >
         <a
-          href="#"
+          href="/register"
           className="flex items-center hover:text-blue-500 transition-colors"
         >
-          Account
+          Register
         </a>
       </Typography>
       <Typography

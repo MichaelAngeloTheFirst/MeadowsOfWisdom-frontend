@@ -2,7 +2,6 @@
 import { NavbarSimple } from "./components/NavbarSimple";
 import { ThemeProvider } from "@/lib/material";
 
-
 export default function Home() {
   return (
     <main>
