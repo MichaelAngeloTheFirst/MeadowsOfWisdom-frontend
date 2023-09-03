@@ -4,17 +4,23 @@ import { getRegisterUrl, getLoginUrl } from "@/lib/urls";
 import Link from "next/link";
 
 import axios from "axios";
-import { FormEventHandler } from "react";
+import React, { FormEventHandler } from "react";
+import { useAuthStore } from "@/app/stores/authStore";
+import { useRouter } from "next/navigation";
 
 export function SimpleRegisterForm() {
-  const handleSubmit = async (e: FormEventHandler<HTMLFormElement>) => {
+  const router = useRouter();
+  const { setAccessToken, setRefreshToken } = useAuthStore();
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault(); // prevent page relaod on submit
     const form = e.target as HTMLFormElement; // cast to reasure type
     const formData = new FormData(form);
     try {
       await axios.post(getRegisterUrl(), formData);
       const response = await axios.post(getLoginUrl(), formData);
-      console.log(response.data.access);
+      setAccessToken(response.data.access);
+      setRefreshToken(response.data.refresh);
+      await router.push("/meadows");
     } catch (error) {
       console.log(error);
     }
@@ -60,7 +66,7 @@ export function SimpleRegisterForm() {
         <Typography color="gray" className="mt-4 text-center font-normal">
           Already have an account?{" "}
           <Link
-            href="#"
+            href="/meadows"
             className="font-medium text-blue-500 transition-colors hover:text-blue-700"
           >
             Sign In
