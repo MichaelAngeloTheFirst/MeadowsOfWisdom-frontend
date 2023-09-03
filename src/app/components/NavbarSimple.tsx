@@ -8,6 +8,7 @@ import {
   Bars3Icon,
   XMarkIcon,
 } from "@/lib/material";
+import Link from "next/link";
 
 function NavList() {
   return (
@@ -18,12 +19,12 @@ function NavList() {
         color="blue-gray"
         className="p-1 font-medium"
       >
-        <a
-          href="#"
+        <Link
+          href="/login"
           className="flex items-center hover:text-blue-500 transition-colors"
         >
           Login
-        </a>
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -31,12 +32,12 @@ function NavList() {
         color="blue-gray"
         className="p-1 font-medium"
       >
-        <a
-          href="#"
+        <Link
+          href="/register"
           className="flex items-center hover:text-blue-500 transition-colors"
         >
-          Account
-        </a>
+          Register
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -44,12 +45,12 @@ function NavList() {
         color="blue-gray"
         className="p-1 font-medium"
       >
-        <a
+        <Link
           href="#"
           className="flex items-center hover:text-blue-500 transition-colors"
         >
           Blocks
-        </a>
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -57,12 +58,12 @@ function NavList() {
         color="blue-gray"
         className="p-1 font-medium"
       >
-        <a
+        <Link
           href="#"
           className="flex items-center hover:text-blue-500 transition-colors"
         >
           Docs
-        </a>
+        </Link>
       </Typography>
     </ul>
   );
@@ -87,7 +88,7 @@ export function NavbarSimple() {
       <div className="flex items-center justify-between text-blue-gray-900">
         <Typography
           as="a"
-          href="#"
+          href="/meadows"
           variant="h6"
           className="mr-4 cursor-pointer py-1.5"
         >
