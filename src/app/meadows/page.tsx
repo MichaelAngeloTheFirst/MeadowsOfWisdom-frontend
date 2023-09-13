@@ -1,11 +1,14 @@
 "use client";
 import { ThemeProvider } from "@material-tailwind/react";
-// import { SimpleLoginForm } from "./components/SimpleLoginForm";
+import { SimpleCard } from "./components/SimpleCard";
 
 export default function Login() {
   return (
     <main>
-      <ThemeProvider>Hello World</ThemeProvider>
+      <ThemeProvider>
+        <SimpleCard />
+      </ThemeProvider>
+
     </main>
   );
 }
