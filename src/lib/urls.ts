@@ -21,7 +21,3 @@ export function getLogoutUrl() {
 export function getFunFactsUrl() {
   return getApiUrl() + '/funfacts/';
 }
-
-// export function getFunFactUrl() {
-//   return getFunFactsUrl() + id + '/';
-// }
