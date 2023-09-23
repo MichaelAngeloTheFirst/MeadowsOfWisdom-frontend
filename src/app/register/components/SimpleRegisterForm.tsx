@@ -39,7 +39,7 @@ export function SimpleRegisterForm() {
         className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
       >
         <div className="mb-4 flex flex-col gap-6">
-          <Input size="lg" label="Name" name="username" />
+          <Input size="lg" label="Username" name="username" />
           <Input type="password" size="lg" label="Password" name="password" />
         </div>
         <Checkbox
@@ -66,7 +66,7 @@ export function SimpleRegisterForm() {
         <Typography color="gray" className="mt-4 text-center font-normal">
           Already have an account?{" "}
           <Link
-            href="/meadows"
+            href="/login"
             className="font-medium text-blue-500 transition-colors hover:text-blue-700"
           >
             Sign In

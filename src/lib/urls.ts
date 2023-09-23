@@ -17,3 +17,7 @@ export function getLoginUrl() {
 export function getLogoutUrl() {
   return getApiUrl() + '/logout/';
 }
+
+export function getFunFactsUrl() {
+  return getApiUrl() + '/funfacts/';
+}
