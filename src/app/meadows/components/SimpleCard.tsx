@@ -48,40 +48,39 @@ export function SimpleCard() {
   };
 
   return (
-    <a>
-      {loading ? (
-        "Finding Knowledge..."
-      ) : (
-        <ul>
-          {facts.map((fact) => (
-            <li key={fact.id}>
-              <Card className="mt-6 w-96">
-                <CardBody>
-                  <Typography variant="h5" color="blue-gray" className="mb-2">
-                    {fact.username} <br />
-                  </Typography>
-                  <strong>Fact:</strong> {fact.fact_text} <br />
-                  <strong>Upvotes:</strong> {fact.upvote} <br />
-                  <strong>Downvotes:</strong> {fact.downvote} <br />
-                  <strong>Created At:</strong> {fact.created_at} <br />
-                  <strong>Updated At:</strong> {fact.updated_at} <br />
-                </CardBody>
-                <CardFooter>
-                  <div className="flex w-max flex-col gap-20 ">
-                    <ButtonGroup variant="text" className="flex align-middle">
-                      <Button className="flex align-left">Likes</Button>
-                      <Button onClick={() => redirectComments(fact.id)}>
-                        Comments
-                      </Button>
-                      <Button className="align-right">Dislikes</Button>
-                    </ButtonGroup>
-                  </div>
-                </CardFooter>
-              </Card>
-            </li>
-          ))}
-        </ul>
-      )}
+        <a>
+        {loading ? (
+          "Finding Knowledge..."
+        ) : (
+            <ul>
+                {facts.map((fact) => (
+                <li key={fact.id}>
+                    <Card className="mt-6 w-96">
+                        <CardBody>
+                            <Typography variant="h5" color="blue-gray" className="mb-2">
+                                  {fact.username} <br />
+                            </Typography>
+                            <strong>Fact:</strong> {fact.factText} <br />
+                            <strong>Upvotes:</strong> {fact.upvote} <br />
+                            <strong>Downvotes:</strong> {fact.downvote} <br />
+                            <strong>Created At:</strong> {fact.createdAt} <br />
+                            <strong>Updated At:</strong> {fact.updatedAt} <br />
+                        </CardBody>
+                        <CardFooter>
+                        <div className="flex w-max flex-col gap-20 ">
+                          <ButtonGroup variant="text" className="flex align-middle">
+                            <Button className="flex align-left">Likes</Button>
+                            <Button onClick={() => redirectComments(fact.id)}>Comments</Button>
+                            <Button className="align-right">Dislikes</Button>
+                          </ButtonGroup>
+                        </div>
+                        </CardFooter>
+
+                    </Card>
+                </li>
+                ))}
+            </ul>
+            )}
     </a>
   );
 }
