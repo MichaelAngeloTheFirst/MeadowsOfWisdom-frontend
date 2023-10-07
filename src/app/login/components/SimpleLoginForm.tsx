@@ -18,7 +18,7 @@ export function SimpleLoginForm() {
       const response = await axios.post(getLoginUrl(), formData);
       setAccessToken(response.data.access);
       setRefreshToken(response.data.refresh);
-      await router.push("/meadows");
+      await router.back();
     } catch (error) {
       console.log(error);
     }
