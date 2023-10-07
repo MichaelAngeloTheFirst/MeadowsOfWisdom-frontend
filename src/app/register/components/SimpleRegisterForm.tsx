@@ -6,11 +6,19 @@ import Link from "next/link";
 import axios from "axios";
 import React, { FormEventHandler } from "react";
 import { useAuthStore } from "@/app/stores/authStore";
+import useStore from "@/app/stores/useStore";
 import { useRouter } from "next/navigation";
 
 export function SimpleRegisterForm() {
   const router = useRouter();
-  const { setAccessToken, setRefreshToken } = useAuthStore();
+  const setAccessToken = useStore(
+    useAuthStore,
+    (state) => state.setAccessToken,
+  );
+  const setRefreshToken = useStore(
+    useAuthStore,
+    (state) => state.setRefreshToken,
+  );
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault(); // prevent page relaod on submit
     const form = e.target as HTMLFormElement; // cast to reasure type
@@ -18,8 +26,8 @@ export function SimpleRegisterForm() {
     try {
       await axios.post(getRegisterUrl(), formData);
       const response = await axios.post(getLoginUrl(), formData);
-      setAccessToken(response.data.access);
-      setRefreshToken(response.data.refresh);
+      setAccessToken?.(response.data.access);
+      setRefreshToken?.(response.data.refresh);
       await router.push("/meadows");
     } catch (error) {
       console.log(error);
