@@ -2,13 +2,10 @@
 import { ThemeProvider } from "@material-tailwind/react";
 import { SimpleCard } from "./components/SimpleCard";
 
-export default function Login() {
+export default function Meadows() {
   return (
     <main>
-      <ThemeProvider>
-        <SimpleCard />
-      </ThemeProvider>
-
+      <SimpleCard />
     </main>
   );
 }
