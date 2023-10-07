@@ -7,17 +7,25 @@ export function getApiUrl() {
 }
 
 export function getRegisterUrl() {
-    return getApiUrl() + '/register/';
+    return getApiUrl() + '/register';
 }
 
 export function getLoginUrl() {
-  return getApiUrl() + '/token/';
+  return getApiUrl() + '/token';
+}
+
+export function getRefreshUrl() {
+  return getLoginUrl() + '/refresh/';
 }
 
 export function getLogoutUrl() {
-  return getApiUrl() + '/logout/';
+  return getApiUrl() + '/logout';
 }
 
 export function getFunFactsUrl() {
-  return getApiUrl() + '/funfacts/';
+  return getApiUrl() + '/funfacts';
+}
+
+export function getCommentsUrl(id: number) {
+  return `${getFunFactsUrl()}/${id}/comments`;
 }
