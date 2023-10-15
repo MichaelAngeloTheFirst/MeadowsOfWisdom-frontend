@@ -1,3 +1,4 @@
+"use client";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -6,10 +7,10 @@ import { ThemeProvider } from "@/lib/material";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Meadows Of Wisdom",
-  description: "Learn and share knowladge",
-};
+// export const metadata: Metadata = {
+//   title: "Meadows Of Wisdom",
+//   description: "Learn and share knowladge",
+// };
 
 export default function RootLayout({
   children,
