@@ -1,5 +1,5 @@
-"use client";
-import React, { useState, useEffect, use } from "react";
+'use client';
+import React, { useState, useEffect, use } from 'react';
 import {
   Card,
   CardBody,
@@ -7,18 +7,16 @@ import {
   Typography,
   Button,
   ButtonGroup,
-} from "@material-tailwind/react";
-import axios from "axios";
-import { getFunFactsUrl } from "@/lib/urls";
-import Link from "next/link";
+} from '@material-tailwind/react';
+import axios from 'axios';
+import { getFunFactsUrl } from '@/lib/urls';
+import Link from 'next/link';
 
 // Define a type for the fun fact data
 interface FunFact {
   id: number;
   username: string;
   factText: string;
-  upvote: number;
-  downvote: number;
   createdAt: string;
   updatedAt: string;
 }
@@ -32,6 +30,7 @@ export function SimpleCard() {
       try {
         const response = await axios.get<FunFact[]>(getFunFactsUrl());
         console.log(response.status);
+        console.log(response.data);
         setFacts(response.data);
         setLoading(false);
       } catch (error) {
@@ -45,7 +44,7 @@ export function SimpleCard() {
   return (
     <div>
       {loading ? (
-        "Finding Knowledge..."
+        'Finding Knowledge...'
       ) : (
         <ul>
           {facts.map((fact) => (
@@ -56,19 +55,15 @@ export function SimpleCard() {
                     {fact.username} <br />
                   </Typography>
                   <strong>Fact:</strong> {fact.factText} <br />
-                  <strong>Upvotes:</strong> {fact.upvote} <br />
-                  <strong>Downvotes:</strong> {fact.downvote} <br />
                   <strong>Created At:</strong> {fact.createdAt} <br />
                   <strong>Updated At:</strong> {fact.updatedAt} <br />
                 </CardBody>
                 <CardFooter>
                   <div className="flex w-max flex-col gap-20 ">
                     <ButtonGroup variant="text" className="flex align-middle">
-                      <Button className="flex align-left">Likes</Button>
+                      <Button className="align-left flex">Likes</Button>
                       <Button>
-                        <Link href={`/funfacts/${fact.id}/comments`}>
-                          Comments
-                        </Link>
+                        <Link href={`/funfacts/${fact.id}/comments`}>Comments</Link>
                       </Button>
                       <Button className="align-right">Dislikes</Button>
                     </ButtonGroup>

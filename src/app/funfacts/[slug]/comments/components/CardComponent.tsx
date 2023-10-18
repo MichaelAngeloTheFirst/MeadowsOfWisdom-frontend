@@ -1,16 +1,19 @@
-import { Card, CardBody, Typography, Button } from '@material-tailwind/react';
+import { Card, CardBody, Typography, Button, ThemeProvider } from '@material-tailwind/react';
 import { FcLike, FcDislike } from 'react-icons/fc';
 import { FaCommentAlt } from 'react-icons/fa';
 import { useState } from 'react';
 import InputComponent from './InputComponent';
-
+import ToggleButton from './ToggleButton';
+import { useVoteContext } from './VoteContext';
+import Provider from './VoteContext';
+import Comments from '../page';
 interface Comment {
   id: number;
   parentId: number;
   username: string;
   commentText: string;
-  upvote: number;
-  downvote: number;
+  countVotes: number;
+  userReaction: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -31,20 +34,22 @@ const formatedDate = (date: string) => {
 };
 
 export function CardComponent({
-  comment,
+  index,
   fact_id,
   afterSubmit,
 }: {
-  comment: NestedComment;
+  index: number;
   fact_id: number;
   afterSubmit?: VoidFunction;
 }) {
   const [onReply, setOnReply] = useState(false);
+  const { CommentArray } = useVoteContext();
+  const comment: NestedComment = CommentArray[index]!;
 
   return (
     <div>
-      <Card className="h-45 mt-6 w-full flex-row p-0">
-        <CardBody className="flex w-full flex-col p-1">
+      <Card className="mt-6 flex-row p-2">
+        <CardBody className="flex w-full flex-col gap-3 p-1">
           <div className="flex justify-between">
             <Typography variant="h6" color="blue-gray" className="mb-1">
               {comment.username}
@@ -57,20 +62,22 @@ export function CardComponent({
           </div>
           <Typography>{comment.commentText}</Typography>
           <div className="flex flex-row justify-between">
-            <div className="flex">
-              <Button ripple={true} variant="text" className="flex justify-center p-1">
-                <h3>
-                  <FcLike size={20} />
-                </h3>
-              </Button>
-
-              <Typography className="flex items-end">
-                {comment.upvote - comment.downvote}
-              </Typography>
-
-              <Button ripple={false} className="flex justify-center p-1">
-                <FcDislike size={20} />
-              </Button>
+            <div className="flex gap-2">
+              <ToggleButton
+                Icon={FcLike}
+                index={index}
+                commentID={comment.id}
+                reaction={comment.userReaction ? comment.userReaction : ''}
+                reactionValue="upvote"
+              />
+              <Typography className="flex items-end">{comment.countVotes}</Typography>
+              <ToggleButton
+                Icon={FcDislike}
+                index={index}
+                commentID={comment.id}
+                reaction={comment.userReaction ? comment.userReaction : ''}
+                reactionValue="downvote"
+              />
             </div>
             <div>
               <Button
@@ -91,9 +98,11 @@ export function CardComponent({
         afterSubmit={afterSubmit}
       />
       <div>
-        {comment.children.map((child) => (
+        {comment.children.map((child, i) => (
           <div className="border-l-2 border-solid border-gray-700 p-2" key={child.id}>
-            <CardComponent comment={child} fact_id={fact_id} afterSubmit={afterSubmit} />
+            <Provider key={comment.id} comment={comment.children}>
+              <CardComponent index={i} fact_id={fact_id} afterSubmit={afterSubmit} />
+            </Provider>
           </div>
         ))}
       </div>

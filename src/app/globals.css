@@ -22,6 +22,8 @@
 
 body {
   height: 100vh;
+  max-height: 100vh;
+  overflow-y: hidden;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
