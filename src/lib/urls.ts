@@ -29,3 +29,7 @@ export function getFunFactsUrl() {
 export function getCommentsUrl(id: number) {
   return `${getFunFactsUrl()}/${id}/comments`;
 }
+
+export function getCommentVotesUrl(comment_id: number, vote_value: string) {
+  return `${getApiUrl()}/${comment_id}/comments/${vote_value}/votes/`;
+}

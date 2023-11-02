@@ -6,6 +6,7 @@ type AuthStore = {
   setAccessToken: (accessToken: string) => void;
   refreshToken?: string;
   setRefreshToken: (refreshToken: string) => void;
+  removeTokens: () => void;
 };
 
 export const useAuthStore = create<AuthStore>()(
@@ -13,6 +14,7 @@ export const useAuthStore = create<AuthStore>()(
     (set) => ({
       setAccessToken: (accessToken: string) => set({ accessToken }),
       setRefreshToken: (refreshToken: string) => set({ refreshToken }),
+      removeTokens: () => set({ accessToken: undefined, refreshToken: undefined }),
     }),
     {
       name: "authStorage",

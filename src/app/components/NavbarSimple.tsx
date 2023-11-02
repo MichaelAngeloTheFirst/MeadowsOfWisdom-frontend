@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { Fragment } from "react";
 import {
   Navbar,
   Collapse,
@@ -9,10 +9,35 @@ import {
   XMarkIcon,
 } from "@/lib/material";
 import Link from "next/link";
+import { useAuthStore } from "@/app/stores/authStore";
+import { logout } from "@/lib/logout";
+import useStore from "../stores/useStore";
 
 function NavList() {
-  return (
-    <ul className="my-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+  const { refreshToken } = useStore(useAuthStore, (state) => state) ?? {
+    refreshToken: undefined,
+  };
+  const userAuthenticated = refreshToken ? true : false;
+
+  const loggedInUI = (
+    <Typography
+      as="li"
+      variant="small"
+      color="blue-gray"
+      className="p-1 font-medium"
+    >
+      <Link
+        href="/meadows"
+        className="flex  hover:text-blue-500 transition-colors"
+        onClick={() => logout()}
+      >
+        Logout
+      </Link>
+    </Typography>
+  );
+
+  const loggedOutUI = (
+    <>
       <Typography
         as="li"
         variant="small"
@@ -21,7 +46,7 @@ function NavList() {
       >
         <Link
           href="/login"
-          className="flex items-center hover:text-blue-500 transition-colors"
+          className="flex  hover:text-blue-500 transition-colors"
         >
           Login
         </Link>
@@ -34,11 +59,19 @@ function NavList() {
       >
         <Link
           href="/register"
-          className="flex items-center hover:text-blue-500 transition-colors"
+          className="flex  hover:text-blue-500 transition-colors"
         >
           Register
         </Link>
       </Typography>
+    </>
+  );
+
+  return (
+    <ul className="my-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+      <div className="flex flex-row">
+        {userAuthenticated ? loggedInUI : loggedOutUI}
+      </div>
       <Typography
         as="li"
         variant="small"
