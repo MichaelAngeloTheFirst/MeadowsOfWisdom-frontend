@@ -9,6 +9,7 @@ interface Comment {
   id: number;
   parentId: number;
   username: string;
+  userId: number;
   commentText: string;
   countVotes: number;
   userReaction: string | null;
@@ -22,49 +23,45 @@ interface NestedComment extends Comment {
 
 export default function ToggleButton({
   Icon,
+  comment,
   index,
-  commentID,
-  reaction,
   reactionValue,
 }: {
   Icon: IconType;
+  comment: NestedComment;
   index: number;
-  commentID: number;
-  reaction: string;
   reactionValue: string;
 }) {
   const { CommentArray, setCommentArray } = useVoteContext();
-  const comment: NestedComment = CommentArray[index];
-  // const [reactionType, setReactionType] = useState(comment.userReaction || '');
-
-  // useEffect(() => {
-  //   setReactionType((prev) => comment.userReaction || '');
-  // }, [comment.userReaction, setReactionType]);
-
   const handlePress = async () => {
     try {
       if (!comment.userReaction) {
-        const response = await privateClient.post(getCommentVotesUrl(commentID, reactionValue));
+        const response = await privateClient.post(getCommentVotesUrl(comment.id, reactionValue));
         const newComment = Object.assign({}, comment, { userReaction: reactionValue });
-        CommentArray.splice(index, 1, newComment);
-        setCommentArray([...CommentArray]);
+        const arrayCopy = [...CommentArray];
+        arrayCopy.splice(index, 1, newComment);
+        setCommentArray(arrayCopy);
         console.log(response.status);
       } else {
         if (comment.userReaction === reactionValue) {
-          const response = await privateClient.delete(getCommentVotesUrl(commentID, reactionValue));
+          const response = await privateClient.delete(
+            getCommentVotesUrl(comment.id, reactionValue),
+          );
 
           const newComment = Object.assign({}, comment, { userReaction: null });
-          CommentArray.splice(index, 1, newComment);
-          setCommentArray([...CommentArray]);
+          const arrayCopy = [...CommentArray];
+          arrayCopy.splice(index, 1, newComment);
+          setCommentArray(arrayCopy);
           console.log(response.status);
         } else {
-          const response = await privateClient.patch(getCommentVotesUrl(commentID, reactionValue));
+          const response = await privateClient.patch(getCommentVotesUrl(comment.id, reactionValue));
 
           const newComment = Object.assign({}, comment, {
             userReaction: comment.userReaction === 'upvote' ? 'downvote' : 'upvote',
           });
-          CommentArray.splice(index, 1, newComment);
-          setCommentArray([...CommentArray]);
+          const arrayCopy = [...CommentArray];
+          arrayCopy.splice(index, 1, newComment);
+          setCommentArray(arrayCopy);
           console.log(response.status);
         }
       }

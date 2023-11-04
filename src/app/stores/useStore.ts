@@ -10,7 +10,7 @@ const useStore = <T, F>(
   useEffect(() => {
     setData(result)
   }, [result])
-
+  
   return data
 }
 

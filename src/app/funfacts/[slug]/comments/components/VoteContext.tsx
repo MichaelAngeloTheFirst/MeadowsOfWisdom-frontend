@@ -5,6 +5,7 @@ interface Comment {
   id: number;
   parentId: number;
   username: string;
+  userId: number;
   commentText: string;
   countVotes: number;
   userReaction: string | null;
@@ -31,6 +32,7 @@ export default function VoteProvider({
   comment: NestedComment[];
 }) {
   const [CommentArray, setCommentArray] = React.useState<NestedComment[]>(initialCommentArray);
+  console.log(CommentArray);
 
   return (
     <VoteContext.Provider value={{ CommentArray: CommentArray, setCommentArray: setCommentArray }}>
