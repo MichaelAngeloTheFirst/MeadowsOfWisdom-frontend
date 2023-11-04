@@ -1,14 +1,17 @@
 import privateClient from '@/lib/api';
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 import { getCommentsUrl } from '@/lib/urls';
 import { CardComponent } from './CardComponent';
 import InputComponent from './InputComponent';
-import Provider from './VoteContext';
+import { useAuthStore } from '@/app/stores/authStore';
+import useStore from '@/app/stores/useStore';
+import { useVoteContext } from './VoteContext';
 
 interface Comment {
   id: number;
   parentId: number;
   username: string;
+  userId: number;
   commentText: string;
   countVotes: number;
   userReaction: string | null;
@@ -25,8 +28,31 @@ const nest = (items: Comment[], id: number | null = null): NestedComment[] =>
     .filter((item) => item.parentId === id)
     .map((item) => ({ ...item, children: nest(items, item.id) }));
 
+function parseJwt(token: string | undefined) {
+  if (!token) {
+    return;
+  }
+
+  const base64Url = token.split('.')[1];
+
+  const base64 = base64Url.replace('-', '+').replace('_', '/');
+  return JSON.parse(window.atob(base64));
+}
+
 export function TestComp({ fact_id }: { fact_id: number }) {
-  const [nestedComments, setComments] = useState<NestedComment[]>([]);
+  const { CommentArray, setCommentArray } = useVoteContext();
+  const { refreshToken } = useStore(useAuthStore, (state) => state) ?? {
+    refreshToken: undefined,
+  };
+
+  function currentUserID() {
+    const data = parseJwt(refreshToken);
+    console.log(data);
+    return data;
+  }
+
+  const uid = currentUserID() ? currentUserID()['user_id'] : -1;
+  console.log(uid);
 
   const fetchData = useCallback(async () => {
     try {
@@ -34,11 +60,11 @@ export function TestComp({ fact_id }: { fact_id: number }) {
       console.log(response.status);
       console.log(response.data);
       const nestedComments = nest(response.data);
-      setComments(nestedComments);
+      setCommentArray(nestedComments);
     } catch (error) {
       console.error(error);
     }
-  }, [fact_id]);
+  }, [fact_id, setCommentArray]);
 
   useEffect(() => {
     let active = true;
@@ -64,10 +90,15 @@ export function TestComp({ fact_id }: { fact_id: number }) {
         <InputComponent replayInfo={true} fact_id={fact_id} afterSubmit={fetchData} />
       </div>
       <div className="align-center relative flex flex-grow flex-col overflow-scroll overflow-x-hidden p-2">
-        {nestedComments.map((comment, i) => (
-          <Provider key={comment.id} comment={nestedComments}>
-            <CardComponent index={i} fact_id={fact_id} afterSubmit={fetchData} />
-          </Provider>
+        {CommentArray.map((comment, i) => (
+          <CardComponent
+            key={comment.id}
+            comment={comment}
+            index={i}
+            fact_id={fact_id}
+            afterSubmit={fetchData}
+            userId={uid}
+          />
         ))}
       </div>
     </div>

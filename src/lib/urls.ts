@@ -30,6 +30,14 @@ export function getCommentsUrl(id: number) {
   return `${getFunFactsUrl()}/${id}/comments`;
 }
 
+export function getOwnerUrl() {
+  return `${getApiUrl()}/content_owner/`;
+}
+
+export function getCommentUrl(factID: number, id: number) {
+  return `${getCommentsUrl(factID)}/${id}`;
+}
+
 export function getCommentVotesUrl(comment_id: number, vote_value: string) {
   return `${getApiUrl()}/${comment_id}/comments/${vote_value}/votes/`;
 }
