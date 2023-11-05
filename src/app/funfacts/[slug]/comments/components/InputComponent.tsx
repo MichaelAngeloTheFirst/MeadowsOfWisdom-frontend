@@ -1,8 +1,7 @@
 import Button from '@material-tailwind/react/components/Button';
-import { FormEvent, FormEventHandler, useState } from 'react';
+import { FormEvent, FormEventHandler } from 'react';
 import privateClient from '@/lib/api';
 import { getCommentsUrl } from '@/lib/urls';
-import { after } from 'node:test';
 import { LiaCommentDots } from 'react-icons/lia';
 
 export default function InputComponent({
@@ -44,7 +43,7 @@ export default function InputComponent({
                 name="comment_text"
               />
             </div>
-            <div className="my-1  flex justify-center">
+            <div className="my-1 flex justify-center">
               <Button
                 className="rounded border border-gray-400 bg-white px-2 py-2 font-semibold text-gray-800 shadow hover:bg-gray-100"
                 type="submit"
