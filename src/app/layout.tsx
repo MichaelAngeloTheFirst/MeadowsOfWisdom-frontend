@@ -1,28 +1,31 @@
-"use client";
-import "./globals.css";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { NavbarSimple } from "./components/NavbarSimple";
-import { ThemeProvider } from "@/lib/material";
+'use client';
+import './globals.css';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import { NavbarSimple } from './components/NavbarSimple';
+import { ThemeProvider } from '@/lib/material';
+import FunFactGlobal from '@/app/components/FunFactGlobal';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
-// export const metadata: Metadata = {
-//   title: "Meadows Of Wisdom",
-//   description: "Learn and share knowladge",
-// };
+interface FunFact {
+  id: number;
+  username: string;
+  userId: number;
+  factText: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  console.log('hello world');
+
   return (
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider>
           <NavbarSimple />
-          {children}
+          <FunFactGlobal>{children}</FunFactGlobal>
         </ThemeProvider>
       </body>
     </html>
