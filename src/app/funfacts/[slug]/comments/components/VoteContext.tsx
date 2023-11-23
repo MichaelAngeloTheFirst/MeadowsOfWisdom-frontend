@@ -33,7 +33,7 @@ export default function VoteProvider({
 }) {
   const [CommentArray, setCommentArray] = React.useState<NestedComment[]>(initialCommentArray);
   console.log(CommentArray);
-
+  // usecallback to avoid copies of function, create fetchdata function
   return (
     <VoteContext.Provider value={{ CommentArray: CommentArray, setCommentArray: setCommentArray }}>
       {children}
