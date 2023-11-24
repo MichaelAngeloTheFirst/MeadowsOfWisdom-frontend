@@ -41,19 +41,18 @@ const formatedDate = (date: string) => {
 };
 
 export function CardComponent({
-  comment,
   index,
-  fact_id,
-  afterSubmit,
+  factId,
   userId,
 }: {
-  comment: NestedComment;
+  
   index: number;
-  fact_id: number;
-  afterSubmit?: VoidFunction;
+  factId: number;
   userId: number;
 }) {
   const [onReply, setOnReply] = useState(false);
+  const { CommentArray } = useVoteContext();
+  const comment = CommentArray[index];
 
   return (
     <div className="relative">
@@ -61,7 +60,7 @@ export function CardComponent({
         <CardBody className="flex w-full flex-col gap-3 p-1">
           <div className="flex justify-between">
             {userId === comment.userId && (
-              <DeleteCommentButton factID={fact_id} comment={comment} index={index} />
+              <DeleteCommentButton factId={factId} comment={comment} index={index} />
             )}
 
             <Typography variant="h6" color="blue-gray" className="mb-1">
@@ -77,14 +76,13 @@ export function CardComponent({
           <Typography>{comment.commentText}</Typography>
           <div className="flex flex-row justify-between">
             <div className="flex gap-2">
-              <ToggleButton Icon={FcLike} comment={comment} index={index} reactionValue="upvote" />
+              <ToggleButton Icon={FcLike} comment={comment} reactionValue="upvote" factId={factId} />
               <Typography className="flex items-end">{comment.countVotes}</Typography>
               <ToggleButton
                 Icon={FcDislike}
                 comment={comment}
-                index={index}
-                reactionValue="downvote"
-              />
+                reactionValue="downvote" 
+                factId={factId} />
             </div>
             <div>
               <Button
@@ -100,19 +98,16 @@ export function CardComponent({
       </Card>
       <InputComponent
         replayInfo={onReply}
-        fact_id={fact_id}
+        factId={factId}
         parent_id={comment.id}
-        afterSubmit={afterSubmit}
       />
       <div>
-        {comment.children.map((child, i) => (
+        {comment.children?.map((child, i) => (
           <div className=" border-l-2 border-solid border-gray-700 p-2" key={child.id}>
-            <Provider key={comment.id} comment={comment.children}>
+            <Provider key={comment.id} comment={comment.children}  factId={factId}>
               <CardComponent
-                comment={child}
                 index={i}
-                fact_id={fact_id}
-                afterSubmit={afterSubmit}
+                factId={factId}
                 userId={userId}
               />
             </Provider>

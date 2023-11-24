@@ -1,5 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Dispatch, SetStateAction } from 'react';
+import privateClient from "@/lib/api";
+import {getCommentsUrl} from "@/lib/urls";
 
 interface Comment {
   id: number;
@@ -20,6 +22,7 @@ interface NestedComment extends Comment {
 type VoteContextProps = {
   CommentArray: NestedComment[];
   setCommentArray: Dispatch<SetStateAction<NestedComment[]>>;
+  fetchData: (id : number) => Promise<void>;
 };
 
 const VoteContext = React.createContext<VoteContextProps | null>(null);
@@ -27,15 +30,25 @@ const VoteContext = React.createContext<VoteContextProps | null>(null);
 export default function VoteProvider({
   comment: initialCommentArray,
   children,
+  factId,
 }: {
-  children: React.ReactNode;
+  
   comment: NestedComment[];
+  children: React.ReactNode;
+  factId: number;
 }) {
   const [CommentArray, setCommentArray] = React.useState<NestedComment[]>(initialCommentArray);
-  console.log(CommentArray);
-  // usecallback to avoid copies of function, create fetchdata function
+  const fetchData = useCallback(async (id :number) => {
+    const {data} = await  privateClient.get(getCommentsUrl(id));
+    setCommentArray(data);
+  }, [])
+
+  useEffect(() => {
+    fetchData(factId);
+  }, [factId, fetchData]);
+
   return (
-    <VoteContext.Provider value={{ CommentArray: CommentArray, setCommentArray: setCommentArray }}>
+    <VoteContext.Provider value={{  CommentArray, setCommentArray, fetchData}}>
       {children}
     </VoteContext.Provider>
   );

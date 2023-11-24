@@ -5,8 +5,10 @@ import { getLoginUrl } from "@/lib/urls";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { FormEventHandler } from "react";
+import { useFunfactStore } from "@/app/stores/funfactStore";
 
 export function SimpleLoginForm() {
+  const { fetchFunFacts } = useFunfactStore();
   const router = useRouter();
   const { setAccessToken, setRefreshToken } = useAuthStore();
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
@@ -18,6 +20,7 @@ export function SimpleLoginForm() {
       const response = await axios.post(getLoginUrl(), formData);
       setAccessToken(response.data.access);
       setRefreshToken(response.data.refresh);
+      fetchFunFacts();
       await router.back();
     } catch (error) {
       console.log(error);

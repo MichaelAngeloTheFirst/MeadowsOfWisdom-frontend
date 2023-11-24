@@ -8,8 +8,10 @@ import React, { FormEventHandler } from "react";
 import { useAuthStore } from "@/app/stores/authStore";
 import useStore from "@/app/stores/useStore";
 import { useRouter } from "next/navigation";
+import { useFunfactStore } from "@/app/stores/funfactStore";
 
 export function SimpleRegisterForm() {
+  const { fetchFunFacts } = useFunfactStore();
   const router = useRouter();
   const setAccessToken = useStore(
     useAuthStore,
@@ -28,6 +30,7 @@ export function SimpleRegisterForm() {
       const response = await axios.post(getLoginUrl(), formData);
       setAccessToken?.(response.data.access);
       setRefreshToken?.(response.data.refresh);
+      fetchFunFacts();
       await router.push("/meadows");
     } catch (error) {
       console.log(error);

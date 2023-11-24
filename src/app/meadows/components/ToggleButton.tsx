@@ -30,7 +30,7 @@ export default function ToggleButton({
       router.push('/login');
       return;
     }
-    console.log(funfact.userReaction);
+    console.log("userReaction",funfact.userReaction);
 
     try {
       if (!funfact.userReaction) {

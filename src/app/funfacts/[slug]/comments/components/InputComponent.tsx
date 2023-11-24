@@ -3,18 +3,18 @@ import { FormEvent, FormEventHandler } from 'react';
 import privateClient from '@/lib/api';
 import { getCommentsUrl } from '@/lib/urls';
 import { LiaCommentDots } from 'react-icons/lia';
+import { useVoteContext } from './VoteContext';
 
 export default function InputComponent({
   replayInfo = false,
-  fact_id,
+  factId,
   parent_id = 0,
-  afterSubmit,
 }: {
   replayInfo: boolean;
-  fact_id: number;
+  factId: number;
   parent_id?: number;
-  afterSubmit?: VoidFunction;
 }) {
+  const { fetchData } = useVoteContext();
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
@@ -22,8 +22,8 @@ export default function InputComponent({
 
     formData.append('parent_id', parent_id.toString() || '0');
     try {
-      const response = await privateClient.post(getCommentsUrl(fact_id), formData);
-      afterSubmit?.();
+      const response = await privateClient.post(getCommentsUrl(factId), formData);
+      fetchData(factId);
       console.log(response.status);
     } catch (error) {
       console.log(error);
