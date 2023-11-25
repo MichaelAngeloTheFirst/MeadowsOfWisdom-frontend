@@ -1,5 +1,5 @@
 
-import { useEffect } from 'react';
+import { use, useCallback, useEffect } from 'react';
 import { CardComponent } from './CardComponent';
 import InputComponent from './InputComponent';
 import { useAuthStore } from '@/app/stores/authStore';
@@ -39,7 +39,7 @@ function parseJwt(token: string | undefined) {
 }
 
 export function TestComp({ factId}: { factId: number }) {
-  const { CommentArray,  fetchData } = useVoteContext();
+  const { CommentArray, setCommentArray,  fetchData } = useVoteContext();
   const { refreshToken } = useStore(useAuthStore, (state) => state) ?? {
     refreshToken: undefined,
   };
@@ -53,25 +53,31 @@ export function TestComp({ factId}: { factId: number }) {
   const uid = currentUserID() ? currentUserID()['user_id'] : -1;
   console.log(uid);
 
+  // const fetchComments = useCallback(async () => {
+  //   const NestedComment = nest(CommentArray);
+  //   console.log(NestedComment);
+  //   // fails here
+  //   // setCommentArray(NestedComment);
+  // }, [CommentArray, setCommentArray]);
 
 
-  useEffect(() => {
-    let active = true;
+  // useEffect(() => {
+  //   let active = true;
 
-    async function run() {
-      await Promise.resolve();
-      if (!active) {
-        return;
-      }
-      await fetchData(factId);
-    }
+  //   async function run() {
+  //     await Promise.resolve();
+  //     if (!active) {
+  //       return;
+  //     }
+  //     await fetchData(factId);
+  //   }
 
-    run();
+  //   run();
 
-    return () => {
-      active = false;
-    };
-  }, [factId, fetchData]);
+  //   return () => {
+  //     active = false;
+  //   };
+  // }, [factId, fetchData]);
 
   return (
     <div className="flex w-1/2 flex-col justify-center">
@@ -85,6 +91,7 @@ export function TestComp({ factId}: { factId: number }) {
             index={i}
             factId={factId}
             userId={uid}
+            comment={comment}
           />
         ))}
       </div>

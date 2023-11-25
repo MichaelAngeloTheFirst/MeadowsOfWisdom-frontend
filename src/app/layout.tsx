@@ -18,8 +18,6 @@ interface FunFact {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  console.log('hello world');
-
   return (
     <html lang="en">
       <body className={inter.className}>

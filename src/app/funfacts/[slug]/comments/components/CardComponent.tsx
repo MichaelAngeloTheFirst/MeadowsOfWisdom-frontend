@@ -7,6 +7,7 @@ import ToggleButton from './ToggleButton';
 import { useVoteContext } from './VoteContext';
 import Provider from './VoteContext';
 import DeleteCommentButton from './DeleteCommentButton';
+import { Comme } from 'next/font/google';
 
 interface Comment {
   id: number;
@@ -44,16 +45,18 @@ export function CardComponent({
   index,
   factId,
   userId,
+  comment,
 }: {
   
   index: number;
   factId: number;
   userId: number;
+  comment: NestedComment;
 }) {
   const [onReply, setOnReply] = useState(false);
-  const { CommentArray } = useVoteContext();
-  const comment = CommentArray[index];
-
+  // const { CommentArray } = useVoteContext();
+  // const comment = CommentArray[index];
+  console.log("comment",comment.id);
   return (
     <div className="relative">
       <Card className=" relative -mt-2 mb-6 flex-row p-2">
@@ -104,13 +107,12 @@ export function CardComponent({
       <div>
         {comment.children?.map((child, i) => (
           <div className=" border-l-2 border-solid border-gray-700 p-2" key={child.id}>
-            <Provider key={comment.id} comment={comment.children}  factId={factId}>
               <CardComponent
-                index={i}
-                factId={factId}
-                userId={userId}
+              index={i}
+              factId={factId}
+              userId={userId} 
+              comment={child} 
               />
-            </Provider>
           </div>
         ))}
       </div>
