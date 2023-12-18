@@ -12,8 +12,8 @@ export function SimpleLoginForm() {
   const router = useRouter();
   const { setAccessToken, setRefreshToken } = useAuthStore();
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
-    e.preventDefault(); // prevent page relaod on submit
-    const form = e.target as HTMLFormElement; // cast to reasure type
+    e.preventDefault(); 
+    const form = e.target as HTMLFormElement; 
     const formData = new FormData(form);
     console.log(formData.get("username"));
     try {

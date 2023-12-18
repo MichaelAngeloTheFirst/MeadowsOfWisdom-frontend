@@ -55,11 +55,8 @@ export default function VoteProvider({
   useEffect(() => {
     fetchData(factId);
     console.log("useEffect loooop",factId);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  // useEffect(() => {
-  //     privateClient.get(getCommentsUrl(1));
-  //   // setCommentArray([]);
-  // }, []);
 
 
   return (

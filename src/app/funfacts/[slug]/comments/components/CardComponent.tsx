@@ -54,8 +54,6 @@ export function CardComponent({
   comment: NestedComment;
 }) {
   const [onReply, setOnReply] = useState(false);
-  // const { CommentArray } = useVoteContext();
-  // const comment = CommentArray[index];
   console.log("comment",comment.id);
   return (
     <div className="relative">

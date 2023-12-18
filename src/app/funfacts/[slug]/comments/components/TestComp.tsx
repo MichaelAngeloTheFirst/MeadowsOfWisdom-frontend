@@ -53,32 +53,6 @@ export function TestComp({ factId}: { factId: number }) {
   const uid = currentUserID() ? currentUserID()['user_id'] : -1;
   console.log(uid);
 
-  // const fetchComments = useCallback(async () => {
-  //   const NestedComment = nest(CommentArray);
-  //   console.log(NestedComment);
-  //   // fails here
-  //   // setCommentArray(NestedComment);
-  // }, [CommentArray, setCommentArray]);
-
-
-  // useEffect(() => {
-  //   let active = true;
-
-  //   async function run() {
-  //     await Promise.resolve();
-  //     if (!active) {
-  //       return;
-  //     }
-  //     await fetchData(factId);
-  //   }
-
-  //   run();
-
-  //   return () => {
-  //     active = false;
-  //   };
-  // }, [factId, fetchData]);
-
   return (
     <div className="flex w-1/2 flex-col justify-center">
       <div className="mt-3  border-b-2 border-r-2 border-t-2 border-solid border-gray-700 bg-white ">
