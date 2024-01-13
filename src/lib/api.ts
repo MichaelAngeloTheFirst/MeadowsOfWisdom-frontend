@@ -15,7 +15,6 @@ const privateClient = axios.create({
 
 const refreshAccessToken = async () => {
     try{
-        console.log("inside refreshAccessToken");
         const refreshToken = useAuthStore.getState().refreshToken;
         const {data} = await axios.post(getRefreshUrl(), {refresh : refreshToken});
 
@@ -42,7 +41,9 @@ privateClient.interceptors.request.use(
      (config) => {
         if(!config.headers['Authorization']) {
             const accessToken = useAuthStore.getState().accessToken;
-            config.headers['Authorization'] = `Bearer ${accessToken}`;
+            if(accessToken){
+                config.headers['Authorization'] = `Bearer ${accessToken}`;
+            }
         }
         return config;
     },

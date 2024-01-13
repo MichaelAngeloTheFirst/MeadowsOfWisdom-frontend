@@ -1,5 +1,4 @@
 import Button from '@material-tailwind/react/components/Button';
-import { useEffect, useState } from 'react';
 import { IconType } from 'react-icons';
 import privateClient from '@/lib/api';
 import { getCommentVotesUrl } from '@/lib/urls';
@@ -24,45 +23,30 @@ interface NestedComment extends Comment {
 export default function ToggleButton({
   Icon,
   comment,
-  index,
   reactionValue,
+  factId,
 }: {
   Icon: IconType;
   comment: NestedComment;
-  index: number;
   reactionValue: string;
+  factId: number;
 }) {
-  const { CommentArray, setCommentArray } = useVoteContext();
+  const { fetchData } = useVoteContext();
   const handlePress = async () => {
     try {
       if (!comment.userReaction) {
         const response = await privateClient.post(getCommentVotesUrl(comment.id, reactionValue));
-        const newComment = Object.assign({}, comment, { userReaction: reactionValue });
-        const arrayCopy = [...CommentArray];
-        arrayCopy.splice(index, 1, newComment);
-        setCommentArray(arrayCopy);
-        console.log(response.status);
+        fetchData(factId);
       } else {
         if (comment.userReaction === reactionValue) {
           const response = await privateClient.delete(
             getCommentVotesUrl(comment.id, reactionValue),
           );
 
-          const newComment = Object.assign({}, comment, { userReaction: null });
-          const arrayCopy = [...CommentArray];
-          arrayCopy.splice(index, 1, newComment);
-          setCommentArray(arrayCopy);
-          console.log(response.status);
+          fetchData(factId);
         } else {
           const response = await privateClient.patch(getCommentVotesUrl(comment.id, reactionValue));
-
-          const newComment = Object.assign({}, comment, {
-            userReaction: comment.userReaction === 'upvote' ? 'downvote' : 'upvote',
-          });
-          const arrayCopy = [...CommentArray];
-          arrayCopy.splice(index, 1, newComment);
-          setCommentArray(arrayCopy);
-          console.log(response.status);
+          fetchData(factId);
         }
       }
     } catch (error) {

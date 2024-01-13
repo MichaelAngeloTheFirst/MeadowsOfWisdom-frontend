@@ -3,10 +3,8 @@ import React, { useState, useEffect, use } from 'react';
 import {
   Card,
   CardBody,
-  CardFooter,
   Typography,
   Button,
-  ButtonGroup,
 } from '@material-tailwind/react';
 import Link from 'next/link';
 import { useFunfactStore } from '@/app/stores/funfactStore';
@@ -25,53 +23,10 @@ const formatedDate = (date: string) => {
 };
 
 export function SimpleCard() {
-  const { funfactArray } = useFunfactStore();
+  const { funfactArray} = useFunfactStore();
   console.log('funfactArray in SimpleCard.tsx', funfactArray);
   if (!funfactArray) return null;
 
-  //   <div className="relative">
-  //   <Card className=" relative -mt-2 mb-6 flex-row p-2">
-  //     <CardBody className="flex w-full flex-col gap-3 p-1">
-  //       <div className="flex justify-between">
-  //         {userId === comment.userId && (
-
-  //         <Typography variant="h6" color="blue-gray" className="mb-1">
-  //           {comment.username}
-  //         </Typography>
-
-  //         <Typography className="font-serif">
-  //           {comment.createdAt === comment.updatedAt
-  //             ? formatedDate(comment.createdAt)
-  //             : formatedDate(comment.updatedAt)}
-  //         </Typography>
-  //       </div>
-  //       <Typography>{comment.commentText}</Typography>
-  //       <div className="flex flex-row justify-between">
-  //         <div className="flex gap-2">
-  //           <ToggleButton Icon={FcLike} comment={comment} index={index} reactionValue="upvote" />
-  //           <Typography className="flex items-end">{comment.countVotes}</Typography>
-  //           <ToggleButton
-  //             Icon={FcDislike}
-  //             comment={comment}
-  //             index={index}
-  //             reactionValue="downvote"
-  //           />
-  //         </div>
-  //         <div>
-  //           <Button
-  //             variant="text"
-  //             className="flex justify-center p-1"
-  //             onClick={() => setOnReply(!onReply)}
-  //           >
-  //             <FaCommentAlt size={20} />
-  //           </Button>
-  //         </div>
-  //       </div>
-  //     </CardBody>
-  //   </Card>
-  //     ))}
-  //   </div>
-  // </div>
 
   return (
     <div className="overflow-auto ">

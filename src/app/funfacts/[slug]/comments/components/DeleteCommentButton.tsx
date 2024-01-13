@@ -21,23 +21,24 @@ interface NestedComment extends Comment {
 }
 
 export default function DeleteCommentButton({
-  factID,
+  factId,
   comment,
   index,
 }: {
-  factID: number;
+  factId: number;
   comment: NestedComment;
   index: number;
 }) {
-  const { CommentArray, setCommentArray } = useVoteContext();
+  const { CommentArray, setCommentArray, fetchData } = useVoteContext();
 
   const handlePress = async () => {
     try {
-      const response = await privateClient.delete(getCommentUrl(factID, comment.id));
+      const response = await privateClient.delete(getCommentUrl(factId, comment.id));
       console.log(response);
       const arrayCopy = [...CommentArray];
       arrayCopy.splice(index, 1);
       setCommentArray(arrayCopy);
+      fetchData(factId);
     } catch (error) {
       console.log(error);
     }

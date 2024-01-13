@@ -4,8 +4,6 @@ import { FaCommentAlt } from 'react-icons/fa';
 import { useState } from 'react';
 import InputComponent from './InputComponent';
 import ToggleButton from './ToggleButton';
-import { useVoteContext } from './VoteContext';
-import Provider from './VoteContext';
 import DeleteCommentButton from './DeleteCommentButton';
 
 interface Comment {
@@ -41,27 +39,25 @@ const formatedDate = (date: string) => {
 };
 
 export function CardComponent({
-  comment,
   index,
-  fact_id,
-  afterSubmit,
+  factId,
   userId,
+  comment,
 }: {
-  comment: NestedComment;
   index: number;
-  fact_id: number;
-  afterSubmit?: VoidFunction;
+  factId: number;
   userId: number;
+  comment: NestedComment;
 }) {
   const [onReply, setOnReply] = useState(false);
-
+  console.log('comment', comment.id);
   return (
     <div className="relative">
       <Card className=" relative -mt-2 mb-6 flex-row p-2">
         <CardBody className="flex w-full flex-col gap-3 p-1">
           <div className="flex justify-between">
             {userId === comment.userId && (
-              <DeleteCommentButton factID={fact_id} comment={comment} index={index} />
+              <DeleteCommentButton factId={factId} comment={comment} index={index} />
             )}
 
             <Typography variant="h6" color="blue-gray" className="mb-1">
@@ -77,13 +73,18 @@ export function CardComponent({
           <Typography>{comment.commentText}</Typography>
           <div className="flex flex-row justify-between">
             <div className="flex gap-2">
-              <ToggleButton Icon={FcLike} comment={comment} index={index} reactionValue="upvote" />
+              <ToggleButton
+                Icon={FcLike}
+                comment={comment}
+                reactionValue="upvote"
+                factId={factId}
+              />
               <Typography className="flex items-end">{comment.countVotes}</Typography>
               <ToggleButton
                 Icon={FcDislike}
                 comment={comment}
-                index={index}
                 reactionValue="downvote"
+                factId={factId}
               />
             </div>
             <div>
@@ -98,24 +99,11 @@ export function CardComponent({
           </div>
         </CardBody>
       </Card>
-      <InputComponent
-        replayInfo={onReply}
-        fact_id={fact_id}
-        parent_id={comment.id}
-        afterSubmit={afterSubmit}
-      />
+      <InputComponent replayInfo={onReply} factId={factId} parent_id={comment.id} />
       <div>
-        {comment.children.map((child, i) => (
+        {comment.children?.map((child, i) => (
           <div className=" border-l-2 border-solid border-gray-700 p-2" key={child.id}>
-            <Provider key={comment.id} comment={comment.children}>
-              <CardComponent
-                comment={child}
-                index={i}
-                fact_id={fact_id}
-                afterSubmit={afterSubmit}
-                userId={userId}
-              />
-            </Provider>
+            <CardComponent index={i} factId={factId} userId={userId} comment={child} />
           </div>
         ))}
       </div>

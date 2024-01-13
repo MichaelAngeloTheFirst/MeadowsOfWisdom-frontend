@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 import { Button } from '@material-tailwind/react';
 import { IconType } from 'react-icons';
 import { useFunfactStore } from '@/app/stores/funfactStore';
@@ -6,7 +6,7 @@ import privateClient from '@/lib/api';
 import { getFactVotesUrl } from '@/lib/urls';
 import { useAuthStore } from '@/app/stores/authStore';
 import { useRouter } from 'next/navigation';
-import useStore from "@/app/stores/useStore";
+import useStore from '@/app/stores/useStore';
 
 export default function ToggleButton({
   reactionValue,
@@ -30,12 +30,12 @@ export default function ToggleButton({
       router.push('/login');
       return;
     }
-    console.log(funfact.userReaction);
+    console.log('userReaction', funfact.userReaction);
 
     try {
       if (!funfact.userReaction) {
         const response = await privateClient.post(getFactVotesUrl(funfact.id, reactionValue));
-        
+
         fetchFunFacts();
         console.log(response.status);
       } else {

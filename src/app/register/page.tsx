@@ -1,11 +1,10 @@
-"use client";
-import { ThemeProvider } from "@material-tailwind/react";
-import { SimpleRegisterForm } from "./components/SimpleRegisterForm";
+'use client';
+import { SimpleRegisterForm } from './components/SimpleRegisterForm';
 
 export default function Register() {
   return (
     <main>
-        <SimpleRegisterForm />
+      <SimpleRegisterForm />
     </main>
   );
 }
