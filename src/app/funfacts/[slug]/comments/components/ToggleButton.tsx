@@ -37,7 +37,6 @@ export default function ToggleButton({
       if (!comment.userReaction) {
         const response = await privateClient.post(getCommentVotesUrl(comment.id, reactionValue));
         fetchData(factId);
-        console.log(response.status);
       } else {
         if (comment.userReaction === reactionValue) {
           const response = await privateClient.delete(
@@ -45,10 +44,8 @@ export default function ToggleButton({
           );
 
           fetchData(factId);
-          console.log(response.status);
         } else {
           const response = await privateClient.patch(getCommentVotesUrl(comment.id, reactionValue));
-
           fetchData(factId);
         }
       }

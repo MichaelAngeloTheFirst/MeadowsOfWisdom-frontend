@@ -3,10 +3,8 @@ import React, { useState, useEffect, use } from 'react';
 import {
   Card,
   CardBody,
-  CardFooter,
   Typography,
   Button,
-  ButtonGroup,
 } from '@material-tailwind/react';
 import Link from 'next/link';
 import { useFunfactStore } from '@/app/stores/funfactStore';

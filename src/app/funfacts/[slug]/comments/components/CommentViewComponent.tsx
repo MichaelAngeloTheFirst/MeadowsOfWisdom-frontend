@@ -1,5 +1,4 @@
 
-import { use, useCallback, useEffect } from 'react';
 import { CardComponent } from './CardComponent';
 import InputComponent from './InputComponent';
 import { useAuthStore } from '@/app/stores/authStore';
@@ -38,15 +37,14 @@ function parseJwt(token: string | undefined) {
   return JSON.parse(window.atob(base64));
 }
 
-export function TestComp({ factId}: { factId: number }) {
-  const { CommentArray, setCommentArray,  fetchData } = useVoteContext();
+export function CommentViewComponent({ factId}: { factId: number }) {
+  const { CommentArray } = useVoteContext();
   const { refreshToken } = useStore(useAuthStore, (state) => state) ?? {
     refreshToken: undefined,
   };
 
   function currentUserID() {
     const data = parseJwt(refreshToken);
-    console.log(data);
     return data;
   }
 

@@ -15,7 +15,6 @@ export function SimpleLoginForm() {
     e.preventDefault(); 
     const form = e.target as HTMLFormElement; 
     const formData = new FormData(form);
-    console.log(formData.get("username"));
     try {
       const response = await axios.post(getLoginUrl(), formData);
       setAccessToken(response.data.access);

@@ -19,7 +19,7 @@ type FunfactStore = {
     fetchFunFacts: () => Promise<void>;
 };
 
-// write async function to get acces token from refresh token code
+
 const refreshAccessToken = async () => {
     try{
         const refreshToken = useAuthStore.getState().refreshToken;

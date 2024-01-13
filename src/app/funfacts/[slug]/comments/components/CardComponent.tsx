@@ -4,10 +4,7 @@ import { FaCommentAlt } from 'react-icons/fa';
 import { useState } from 'react';
 import InputComponent from './InputComponent';
 import ToggleButton from './ToggleButton';
-import { useVoteContext } from './VoteContext';
-import Provider from './VoteContext';
 import DeleteCommentButton from './DeleteCommentButton';
-import { Comme } from 'next/font/google';
 
 interface Comment {
   id: number;
@@ -47,14 +44,13 @@ export function CardComponent({
   userId,
   comment,
 }: {
-  
   index: number;
   factId: number;
   userId: number;
   comment: NestedComment;
 }) {
   const [onReply, setOnReply] = useState(false);
-  console.log("comment",comment.id);
+  console.log('comment', comment.id);
   return (
     <div className="relative">
       <Card className=" relative -mt-2 mb-6 flex-row p-2">
@@ -77,13 +73,19 @@ export function CardComponent({
           <Typography>{comment.commentText}</Typography>
           <div className="flex flex-row justify-between">
             <div className="flex gap-2">
-              <ToggleButton Icon={FcLike} comment={comment} reactionValue="upvote" factId={factId} />
+              <ToggleButton
+                Icon={FcLike}
+                comment={comment}
+                reactionValue="upvote"
+                factId={factId}
+              />
               <Typography className="flex items-end">{comment.countVotes}</Typography>
               <ToggleButton
                 Icon={FcDislike}
                 comment={comment}
-                reactionValue="downvote" 
-                factId={factId} />
+                reactionValue="downvote"
+                factId={factId}
+              />
             </div>
             <div>
               <Button
@@ -97,20 +99,11 @@ export function CardComponent({
           </div>
         </CardBody>
       </Card>
-      <InputComponent
-        replayInfo={onReply}
-        factId={factId}
-        parent_id={comment.id}
-      />
+      <InputComponent replayInfo={onReply} factId={factId} parent_id={comment.id} />
       <div>
         {comment.children?.map((child, i) => (
           <div className=" border-l-2 border-solid border-gray-700 p-2" key={child.id}>
-              <CardComponent
-              index={i}
-              factId={factId}
-              userId={userId} 
-              comment={child} 
-              />
+            <CardComponent index={i} factId={factId} userId={userId} comment={child} />
           </div>
         ))}
       </div>

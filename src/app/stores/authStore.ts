@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
+import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 type AuthStore = {
   accessToken?: string;
@@ -17,7 +17,7 @@ export const useAuthStore = create<AuthStore>()(
       removeTokens: () => set({ accessToken: undefined, refreshToken: undefined }),
     }),
     {
-      name: "authStorage",
+      name: 'authStorage',
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({ refreshToken: state.refreshToken }),
     },

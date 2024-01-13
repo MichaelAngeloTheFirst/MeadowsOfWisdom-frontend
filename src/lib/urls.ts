@@ -7,7 +7,7 @@ export function getApiUrl() {
 }
 
 export function getRegisterUrl() {
-    return getApiUrl() + '/register';
+  return getApiUrl() + '/register';
 }
 
 export function getLoginUrl() {
@@ -22,8 +22,8 @@ export function getLogoutUrl() {
   return getApiUrl() + '/logout';
 }
 
-export function getUserUrl(id : number){
-  return `${getApiUrl()}/users/${id}`
+export function getUserUrl(id: number) {
+  return `${getApiUrl()}/users/${id}`;
 }
 
 export function getFunFactsUrl() {
